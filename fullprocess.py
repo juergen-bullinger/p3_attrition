@@ -5,16 +5,19 @@ import scoring
 import deployment
 import diagnostics
 import reporting
+import ingestion
 
 ##################Check and read new data
-#first, read ingestedfiles.txt
-
-#second, determine whether the source data folder has files that aren't listed in ingestedfiles.txt
-
+# first, read ingestedfiles.txt
+# second, determine whether the source data folder has files that aren't listed in ingestedfiles.txt
+# This is done in ingestion.py
+new_files_found = ingestion.process_new_files()
 
 
 ##################Deciding whether to proceed, part 1
 #if you found new data, you should proceed. otherwise, do end the process here
+if not new_files_found():
+    exit(0)
 
 
 ##################Checking for model drift
