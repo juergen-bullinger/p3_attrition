@@ -26,7 +26,7 @@ def train_model():
             intercept_scaling=1, 
             l1_ratio=None, 
             max_iter=100,
-            multi_class='warn', 
+            multi_class='ovr', 
             n_jobs=None, 
             penalty='l2',
             random_state=0, 
@@ -41,9 +41,10 @@ def train_model():
     # fit the logistic regression to your data
     model.fit(X, y_true)
     
+    end_time = timeit.default_timer()
+    helpers.log_runtime("training", end_time - start_time)
     # write the trained model to your workspace in a file called 
     # trainedmodel.pkl
     with cfg.output_model_file.open("wb") as fp_model:
         pickle.dump(model, fp_model)
-    end_time = timeit.default_timer()
-    helpers.log_runtime("training", end_time - start_time)
+    return model

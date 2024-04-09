@@ -59,7 +59,7 @@ def merge_multiple_dataframe(
             print(f"reading {input_file}...")
             df = pd.read_csv(input_file)
             data_frames_to_merge.append(df)
-            fp_in.writeline(str(input_file))
+            fp_in.write(str(input_file) + "\n")
             if str(input_file) not in processed_files:
                 new_files_found = True
     if new_files_found:
@@ -83,8 +83,8 @@ def process_new_files():
     start_time = timeit.default_timer()
     new_files_found = merge_multiple_dataframe(
         cfg.input_folder_path,
-        cfg.merge_result_path,
-        cfg.merge_protocol_path,
+        cfg.merge_result_file,
+        cfg.merge_protocol_file,
     )
     end_time = timeit.default_timer()
     helpers.log_runtime("ingestion", end_time - start_time)

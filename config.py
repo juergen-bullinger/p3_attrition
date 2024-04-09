@@ -33,7 +33,7 @@ output_model_path = Path(config['output_model_path'])
 
 # files
 merge_result_file = output_folder_path / "finaldata.csv"
-merge_protocol_file = input_folder_path / "ingestedfiles.txt"
+merge_protocol_file = output_folder_path / "ingestedfiles.txt"
 latest_score_file = prod_deployment_path / "latestscore.txt"
 deployed_score_file = prod_deployment_path / "latestscore.txt"
 deployed_model_file = prod_deployment_path / "trainedmodel.pkl"
