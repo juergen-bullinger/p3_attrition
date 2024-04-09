@@ -21,8 +21,8 @@ dataset_csv_path = os.path.join(config['output_folder_path'])
 
 ##############Function for reporting
 def score_model():
-    #calculate a confusion matrix using the test data and the deployed model
-    #write the confusion matrix to the workspace
+    # calculate a confusion matrix using the test data and the deployed model
+    # write the confusion matrix to the workspace
 
 
 

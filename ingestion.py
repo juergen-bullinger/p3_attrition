@@ -1,11 +1,18 @@
+"""
+Ingest the data from the input_folder_path and create one merged result file
+in output_folder_path named finaldata.csv
+
+Author:
+    Jürgen Bullinger
+"""
 import pandas as pd
-import numpy as np
-import os
 import json
-from datetime import datetime
+# from datetime import datetime
 from pathlib import Path
+import logging
 
-
+logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
+logger = logging.getLogger()
 
 
 #############Load config.json and get input and output paths
@@ -15,6 +22,8 @@ with open('config.json','r') as f:
 input_folder_path = Path(config['input_folder_path'])
 output_folder_path = Path(config['output_folder_path'])
 
+merge_result_path = output_folder_path / "finaldata.csv"
+merge_protocol_path = input_folder_path / "ingestedfiles.txt"
 
 
 #############Function for data ingestion
@@ -61,6 +70,7 @@ def merge_multiple_dataframe(
     if new_files_found:
         # only update if new files were found
         merged_df = pd.concat(data_frames_to_merge)
+        merged_df.drop_duplicates(inplace=True)
         merged_df.to_csv(output_file)
     return new_files_found
     
@@ -76,9 +86,9 @@ def process_new_files():
 
     """
     return merge_multiple_dataframe(
-        input_folder_path, 
-        output_folder_path / "merged.csv",
-        input_folder_path / "ingestedfiles.txt"
+        input_folder_path,
+        merge_result_path,
+        merge_protocol_path,
     )
 
 

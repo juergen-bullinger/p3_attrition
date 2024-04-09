@@ -20,3 +20,11 @@ Reads the csv files in the input directory and merges them to one csv file, that
 
 
 
+
+
+
+# Helpfull Github commands
+git config --global github.user <your_username>
+then use this command
+
+git config --global credential.helper store
