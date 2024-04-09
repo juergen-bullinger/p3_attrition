@@ -51,7 +51,30 @@ def dataframe_summary(data_file):
         for col_series in df.select_dtypes(include=["int", "float"]).items()
     ]
     
-    
+
+def missing_summary(data_file):
+    """
+    Create a list of ratios of missing values
+
+    Parameters
+    ----------
+    data_file : str or path
+        Path to the csv file to be examined.
+
+    Returns
+    -------
+    list of dicts (one dict per column)
+    """
+    df = da.read_raw_data(data_file)
+    return [
+        {
+            "column": col_series.name,
+            "missing": col_series.isna().mean(),
+        }
+        for col_series in df.items()
+    ]
+
+
 
 ################## Function to get timings
 def execution_time():
@@ -87,5 +110,6 @@ def outdated_packages_list():
 if __name__ == '__main__':
     model_predictions(cfg.deployed_model_file, cfg.test_data_file)
     dataframe_summary(cfg.test_data_file)
+    missing_summary(cfg.test_data_file)
     execution_time()
     outdated_packages_list()
