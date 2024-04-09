@@ -6,20 +6,17 @@ import os
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
-import json
-from pathlib import Path
+import config as cfg
+import data_access as da
+import timeit
+import helpers 
 
 ###################Load config.json and get path variables
-with open('config.json','r') as f:
-    config = json.load(f) 
-
-dataset_csv_path = Path(config['output_folder_path']) 
-model_path = Path(config['output_model_path']) 
-
+# see config.py
 
 #################Function for training the model
 def train_model():
-    
+    start_time = timeit.default_timer()
     # use this logistic regression for training
     model = LogisticRegression(
             C=1.0, 
@@ -39,9 +36,14 @@ def train_model():
             warm_start=False
     )
     # read the training data
-    df = pd.read_csv()
+    X, y_true = da.read_model_data(cfg.merge_result_file)
     
     # fit the logistic regression to your data
+    model.fit(X, y_true)
     
-    # write the trained model to your workspace in a file called trainedmodel.pkl
-    "trainedmodel.pkl"
+    # write the trained model to your workspace in a file called 
+    # trainedmodel.pkl
+    with cfg.output_model_file.open("wb") as fp_model:
+        pickle.dump(model, fp_model)
+    end_time = timeit.default_timer()
+    helpers.log_runtime("training", end_time - start_time)

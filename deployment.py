@@ -16,7 +16,7 @@ logger = logging.getLogger()
 
 
 
-##################Load config.json and correct path variable
+################## Load config.json and correct path variable
 # see config.py
 
 print(cfg.dataset_csv_path)
@@ -24,13 +24,13 @@ print(cfg.prod_deployment_path)
 print(cfg.merge_protocol_file)
 
 
-####################function for deployment
+#################### function for deployment
 def store_model_into_pickle(model):
     # create the pickle file for the model
-    with cfg.model_file.open("wb") as fp:
+    with cfg.prod_deployment_path.open("wb") as fp:
         pickle.dump(model, fp)
     
-    X, y = da.read_model_data(cfg.merge_result_file)
+    X, y_true = da.read_model_data(cfg.merge_result_file)
     y_pred = model.predict(X)
     
     # copy the latestscore.txt value, 

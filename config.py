@@ -27,9 +27,16 @@ input_folder_path = Path(config['input_folder_path'])
 output_folder_path = Path(config['output_folder_path'])
 dataset_csv_path = Path(config['output_folder_path']) 
 prod_deployment_path = Path(config['prod_deployment_path']) 
+test_data_path = Path(config['test_data_path']) 
+output_model_path = Path(config['output_model_path']) 
+
 
 # files
 merge_result_file = output_folder_path / "finaldata.csv"
 merge_protocol_file = input_folder_path / "ingestedfiles.txt"
 latest_score_file = prod_deployment_path / "latestscore.txt"
-model_file = prod_deployment_path / "trainedmodel.pkl"
+deployed_score_file = prod_deployment_path / "latestscore.txt"
+deployed_model_file = prod_deployment_path / "trainedmodel.pkl"
+output_model_file = output_model_path / "trainedmodel.pkl"
+test_data_file = test_data_path / "testdata.csv"
+time_log_file = output_folder_path / "runtimes.json"

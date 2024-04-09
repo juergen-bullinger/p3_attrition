@@ -8,8 +8,12 @@ Author:
 import pandas as pd
 # from datetime import datetime
 import logging
+import timeit
 
 import config as cfg
+import helpers 
+
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
@@ -76,11 +80,15 @@ def process_new_files():
     True if there are new files, False otherwise.
 
     """
-    return merge_multiple_dataframe(
+    start_time = timeit.default_timer()
+    new_files_found = merge_multiple_dataframe(
         cfg.input_folder_path,
         cfg.merge_result_path,
         cfg.merge_protocol_path,
     )
+    end_time = timeit.default_timer()
+    helpers.log_runtime("ingestion", end_time - start_time)
+    return new_files_found
 
 
 
