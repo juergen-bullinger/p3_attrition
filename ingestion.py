@@ -6,25 +6,16 @@ Author:
     Jürgen Bullinger
 """
 import pandas as pd
-import json
 # from datetime import datetime
-from pathlib import Path
 import logging
 
+import config as cfg
 logging.basicConfig(level=logging.INFO, format="%(asctime)-15s %(message)s")
 logger = logging.getLogger()
 
 
 #############Load config.json and get input and output paths
-with open('config.json','r') as f:
-    config = json.load(f) 
-
-input_folder_path = Path(config['input_folder_path'])
-output_folder_path = Path(config['output_folder_path'])
-
-merge_result_path = output_folder_path / "finaldata.csv"
-merge_protocol_path = input_folder_path / "ingestedfiles.txt"
-
+# this is done in config.py
 
 #############Function for data ingestion
 def merge_multiple_dataframe(
@@ -86,9 +77,9 @@ def process_new_files():
 
     """
     return merge_multiple_dataframe(
-        input_folder_path,
-        merge_result_path,
-        merge_protocol_path,
+        cfg.input_folder_path,
+        cfg.merge_result_path,
+        cfg.merge_protocol_path,
     )
 
 

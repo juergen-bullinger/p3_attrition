@@ -18,7 +18,11 @@ Frame script that calls the other scripts to perform the full process.
 ### ingestion.py
 Reads the csv files in the input directory and merges them to one csv file, that is then placed in ingesteddata.
 
+### config.py
+Helper script to factor out the config access and to define importable names for frequently used config values.
 
+### data_access.py
+Helper script to factor out the data access. To read and prepare the csv files.
 
 
 

@@ -44,4 +44,4 @@ def train_model():
     # fit the logistic regression to your data
     
     # write the trained model to your workspace in a file called trainedmodel.pkl
-
+    "trainedmodel.pkl"
