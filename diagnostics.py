@@ -52,6 +52,7 @@ def dataframe_summary(data_file):
     ]
     
 
+################## Function to get the summary of missing values
 def missing_summary(data_file):
     """
     Create a list of ratios of missing values
@@ -66,14 +67,19 @@ def missing_summary(data_file):
     list of dicts (one dict per column)
     """
     df = da.read_raw_data(data_file)
-    return [
-        {
-            "column": col_series.name,
-            "missing": col_series.isna().mean(),
-        }
-        for col_series in df.items()
-    ]
-
+    summary = []
+    for col_series in df.items():
+        col_name = col_series.isna().mean()
+        na_ratio = col_series.isna().mean()
+        logger.info(
+            "NA ratio of column %s contains is %s", )
+        summary.append(
+            {
+                "column": col_name,
+                "missing": na_ratio,
+            }
+        )
+    return summary
 
 
 ################## Function to get timings
