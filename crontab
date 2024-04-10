@@ -1,0 +1,1 @@
+*/10 * * * * python ~/workspace/src/process_cron.sh

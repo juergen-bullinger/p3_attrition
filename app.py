@@ -1,7 +1,7 @@
 from flask import Flask, session, jsonify, request
 import pickle
-import diagnosis 
 import logging
+from pathlib import Path
 
 import config as cfg
 import diagnostics
@@ -34,12 +34,18 @@ def predict():
     Predict using the implementation in diagnostics.py
     """
     logger.info("prediction api was called")
-    predictions = diagnosis.model_predictions(
-        cfg.deployed_model_file, 
-        cfg.test_data_file,
-    )
-    # call the prediction function you created in Step 3
-    return jsonify(predictions)
+    data_file = Path(request.form['data_file'])
+    logger.info("prediction api was called with path %s", data_file)
+    if data_file.exists():
+        predictions = diagnostics.model_predictions(
+            cfg.deployed_model_file, 
+            cfg.test_data_file,
+        )
+        # call the prediction function you created in Step 3
+        return jsonify(predictions.tolist())
+    else:
+        logger.error("File %s not found", data_file)
+        return jsonify(None)
 
 
 ####################### Scoring Endpoint
