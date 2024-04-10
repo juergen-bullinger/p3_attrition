@@ -93,6 +93,18 @@ def execution_time():
     return [runtimes.get("training"), runtimes.get("ingestion")]
 
 
+################## Function to combine na und timing diagnostics
+def diagnstics_for_missing_data_and_timing(data_file):
+    """
+    Prepare the combined result for missing data and timings for the
+    api endpoint
+    """
+    result_document = {
+        "missing_data": missing_summary(data_file),
+        "timing_info": execution_time(),
+    }
+
+
 ################## Function to check dependencies
 def outdated_packages_list():
     """
