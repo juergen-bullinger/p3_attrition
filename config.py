@@ -26,10 +26,10 @@ with open('config.json','r') as f:
 input_folder_path = Path(config['input_folder_path'])
 output_folder_path = Path(config['output_folder_path'])
 dataset_csv_path = Path(config['output_folder_path']) 
-prod_deployment_path = Path(config['prod_deployment_path']) 
 test_data_path = Path(config['test_data_path']) 
 output_model_path = Path(config['output_model_path']) 
-
+prod_deployment_path = Path(config['prod_deployment_path']) 
+report_path = prod_deployment_path
 
 # files
 merge_result_file = output_folder_path / "finaldata.csv"

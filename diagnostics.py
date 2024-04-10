@@ -19,7 +19,7 @@ logger = logging.getLogger()
 def model_predictions(model_file, data_file):
     # read the deployed model and a test dataset, calculate predictions
     # create the pickle file for the model
-    with model_file.open("wb") as fp_model:
+    with model_file.open("rb") as fp_model:
         model = pickle.load(fp_model)
     X, y_true = da.read_model_data(data_file)
     y_pred = model.predict(X)
@@ -41,14 +41,15 @@ def dataframe_summary(data_file):
     list of dicts (one dict per numeric columns)
     """
     df = da.read_raw_data(data_file)
+    df_numeric = df.select_dtypes(include=["int", "float"])
     return [
         {
-            "column": col_series.name,
+            "column": col_name,
             "mean": col_series.mean(),
             "median": col_series.median(),
             "std": col_series.std(),            
         }
-        for col_series in df.select_dtypes(include=["int", "float"]).items()
+        for col_name, col_series in df_numeric.items()
     ]
     
 
@@ -68,11 +69,13 @@ def missing_summary(data_file):
     """
     df = da.read_raw_data(data_file)
     summary = []
-    for col_series in df.items():
-        col_name = col_series.isna().mean()
+    for col_name, col_series in df.items():
         na_ratio = col_series.isna().mean()
         logger.info(
-            "NA ratio of column %s contains is %s", )
+            "NA ratio of column %s is %s",
+            col_name,
+            na_ratio,
+        )
         summary.append(
             {
                 "column": col_name,
@@ -113,9 +116,22 @@ def outdated_packages_list():
     return outdated_packages
 
 
-if __name__ == '__main__':
+################## Perform default diagnostics
+def perform_default_diagnostics():
+    """
+    This is what is done if the script is run from the shell.
+
+    Returns
+    -------
+    None.
+    """
     model_predictions(cfg.deployed_model_file, cfg.test_data_file)
     dataframe_summary(cfg.test_data_file)
     missing_summary(cfg.test_data_file)
     execution_time()
     outdated_packages_list()
+    
+    
+
+if __name__ == '__main__':
+    perform_default_diagnostics()

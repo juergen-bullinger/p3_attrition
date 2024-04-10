@@ -64,6 +64,8 @@ deployment.store_model_into_pickle(model)
 
 ################## Diagnostics and reporting
 # run diagnostics.py and reporting.py for the re-deployed model
+diagnostics.perform_default_diagnostics()
+reporting.perform_default_reporting()
 
 
 
