@@ -49,7 +49,9 @@ def read_model_data(csv_file_name):
         target = df.pop("exited")
     else:
         target = None
-    if "corporation" in df.columns:
-        # remove this - unused column
-        df.pop("corporation")
-    return df, target
+    columns_to_return = [
+        "lastmonth_activity", 
+        "lastyear_activity",
+        "number_of_employees",
+    ]
+    return df[columns_to_return], target

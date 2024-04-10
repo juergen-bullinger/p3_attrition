@@ -27,7 +27,7 @@ print(cfg.merge_protocol_file)
 #################### function for deployment
 def store_model_into_pickle(model):
     # create the pickle file for the model
-    with cfg.prod_deployment_path.open("wb") as fp:
+    with cfg.deployed_model_file.open("wb") as fp:
         pickle.dump(model, fp)
     
     X, y_true = da.read_model_data(cfg.merge_result_file)
@@ -35,7 +35,7 @@ def store_model_into_pickle(model):
     
     # copy the latestscore.txt value, 
     # and the ingestfiles.txt file into the deployment directory
-    shutil.copy(str(cfg.merge_protocol_path), str(cfg.prod_deployment_path))
+    shutil.copy(str(cfg.merge_protocol_file), str(cfg.prod_deployment_path))
     
         
 

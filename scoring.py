@@ -43,7 +43,7 @@ def score_model(model, write_score=True):
     X, y_true = da.read_model_data(cfg.test_data_file)
     
     # predict y using the given model
-    y_pred = model.pred(X)
+    y_pred = model.predict(X)
     
     # calculate an F1 score for the model relative to the test data
     model_f1_score = metrics.f1_score(y_true, y_pred)

@@ -66,7 +66,7 @@ def merge_multiple_dataframe(
         # only update if new files were found
         merged_df = pd.concat(data_frames_to_merge)
         merged_df.drop_duplicates(inplace=True)
-        merged_df.to_csv(output_file)
+        merged_df.to_csv(output_file, index=False)
     return new_files_found
     
 
